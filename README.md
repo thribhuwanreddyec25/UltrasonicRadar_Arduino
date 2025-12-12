@@ -9,6 +9,12 @@ If an object gets **closer than 10 cm**, the radar **pauses**, and a **buzzer + 
 
 ## Index
 * [What it does / Features](https://github.com/thribhuwanreddyec25/UltrasonicRadar_Arduino/tree/main?tab=readme-ov-file#what-it-does--features)
+* [Hardware Required](https://github.com/thribhuwanreddyec25/UltrasonicRadar_Arduino/tree/main?tab=readme-ov-file#hardware-required)
+* [Circuit Wiring](https://github.com/thribhuwanreddyec25/UltrasonicRadar_Arduino/tree/main?tab=readme-ov-file#circuit-wiring)
+* [How the System Works](https://github.com/thribhuwanreddyec25/UltrasonicRadar_Arduino/tree/main?tab=readme-ov-file#how-the-system-works)
+* [How to Run](https://github.com/thribhuwanreddyec25/UltrasonicRadar_Arduino/tree/main?tab=readme-ov-file#how-to-run)
+* [Probable problems](https://github.com/thribhuwanreddyec25/UltrasonicRadar_Arduino/tree/main?tab=readme-ov-file#probable-problems)
+
 ---
 
 ## What it does / Features
