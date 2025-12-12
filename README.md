@@ -6,6 +6,7 @@ The radar sweeps across a **150° arc**, measures distance at every degree, and 
 If an object gets **closer than 10 cm**, the radar **pauses**, and a **buzzer + red LED warning** activates.
 
 <https://www.youtube.com/shorts/Zcoh3BTOOwI>
+<https://www.tinkercad.com/things/lxV7dB6tnq4-ultrasonicradararduino?sharecode=j54DP8bi3ltQT9PRzLgGo8iqaud1rpmlPRdYpFLAbaI>
 
 ---
 
@@ -74,6 +75,8 @@ If an object gets **closer than 10 cm**, the radar **pauses**, and a **buzzer + 
 | Red LED   | D7          |
 | Green LED | D6          |
 | Buzzer    | D11         |
+
+In case u still have issues with this, you can check <br>[The Tinkercad version without the radar tracking UI](https://www.tinkercad.com/things/lxV7dB6tnq4-ultrasonicradararduino?sharecode=j54DP8bi3ltQT9PRzLgGo8iqaud1rpmlPRdYpFLAbaI)
 
 ---
 
