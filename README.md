@@ -5,6 +5,8 @@ The radar sweeps across a **150° arc**, measures distance at every degree, and 
 
 If an object gets **closer than 10 cm**, the radar **pauses**, and a **buzzer + red LED warning** activates.
 
+<https://www.youtube.com/shorts/Zcoh3BTOOwI>
+
 ---
 
 ## Index
