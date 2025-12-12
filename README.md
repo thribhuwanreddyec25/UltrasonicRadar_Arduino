@@ -1,11 +1,14 @@
 # UltrasonicRadar_Arduino
 
-# Ultrasonic Radar System 
-
 This project implements a complete radar-style scanning system using an **Arduino**, **HC-SR04 ultrasonic sensor**, **servo motor**, and a **Processing radar interface**.
 The radar sweeps across a **150° arc**, measures distance at every degree, and displays objects in real time on a radar screen.
 
 If an object gets **closer than 10 cm**, the radar **pauses**, and a **buzzer + red LED warning** activates.
+
+---
+
+## Index
+* [What it does / Features](https://github.com/thribhuwanreddyec25/UltrasonicRadar_Arduino/edit/main/README.md#what-it-does--features)
 
 ---
 
@@ -120,13 +123,15 @@ If distance < **10 cm**:
 
 ### Step 1 — Upload Arduino Code
 
-Open the `.ino` file in Arduino IDE and upload it.
+Open the  [Radar_Arduino.ino](https://github.com/thribhuwanreddyec25/UltrasonicRadar_Arduino/blob/main/Radar_Arduino.ino)  file in Arduino IDE and upload it.
+
 
 ### Step 2 — Open Processing Sketch
 
 You can download it here <https://processing.org/download>
 
-Open `RadarDisplay.pde` in Processing.
+Open  [Radar_UI.pde](https://github.com/thribhuwanreddyec25/UltrasonicRadar_Arduino/blob/main/Radar_UI.pde)  in Processing.
+
 
 Update the COM port:
 
