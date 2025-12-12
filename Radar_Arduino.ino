@@ -1,84 +1,103 @@
-#include <Servo.h>
+#include <Servo.h>                   // Include servo library
 
-const int trigPin = 8;      // Ultrasonic trigger pin
-const int echoPin = 9;      // Ultrasonic echo pin
-const int buzzerPin = 11;   // Buzzer output pin
-const int ledRed = 7;       // Red LED pin
-const int ledGreen = 6;     // Green LED pin
+// Ultrasonic sensor pins
+const int trigPin = 8;              // Trigger pin of HC-SR04
+const int echoPin = 9;              // Echo pin of HC-SR04
 
-// Variables for ultrasonic timing and distance
-long duration;
-int distance;
+// Output indicators
+const int buzzerPin = 11;           // Buzzer pin
+const int ledRed = 7;               // Warning LED (Red)
+const int ledGreen = 6;             // Normal LED (Green)
 
-Servo myServo;  // Servo motor object
+// Variables for ultrasonic measurement
+long duration;                      // Echo pulse duration
+int distance;                       // Converted distance in cm
 
+Servo myServo;                      // Servo motor object
+
+
+// ---------------------------------------------------------
+// Setup
+// ---------------------------------------------------------
 void setup() {
-  pinMode(trigPin, OUTPUT);     // Set trigger pin as output
-  pinMode(echoPin, INPUT);      // Set echo pin as input
-  pinMode(buzzerPin, OUTPUT);   // Buzzer as output
-  pinMode(ledRed, OUTPUT);      // Red LED output
-  pinMode(ledGreen, OUTPUT);    // Green LED output
+  pinMode(trigPin, OUTPUT);         // Ultrasonic trigger as output
+  pinMode(echoPin, INPUT);          // Ultrasonic echo as input
+  pinMode(buzzerPin, OUTPUT);       // Buzzer output
+  pinMode(ledRed, OUTPUT);          // Red LED output
+  pinMode(ledGreen, OUTPUT);        // Green LED output
 
-  // Default LED/buzzer states
-  digitalWrite(ledGreen, HIGH);
-  digitalWrite(ledRed, LOW);
-  digitalWrite(buzzerPin, LOW);
+  // Default indicator states
+  digitalWrite(ledGreen, HIGH);     // Green LED ON — safe
+  digitalWrite(ledRed, LOW);        // Red LED OFF
+  digitalWrite(buzzerPin, LOW);     // Buzzer OFF
 
-  Serial.begin(9600);           // Start serial communication
-  myServo.attach(10);           // Attach servo to pin 10
+  Serial.begin(9600);               // Serial communication for Processing radar
+  myServo.attach(10);               // Attach servo to pin D10
 }
 
+
+// ---------------------------------------------------------
+// Main Loop — Sweeps servo from 15° → 165° → 15°
+// ---------------------------------------------------------
 void loop() {
 
-  // Sweep from 15° to 165°
+  // Sweep forward (left to right)
   for (int i = 15; i <= 165; i++) {
 
-    distance = calculateDistance();   // Read ultrasonic distance
+    distance = calculateDistance();   // Read current distance
 
-    // Send angle and distance to serial monitor/Processing
+    // Send angle + distance to Processing:  "45,23."
     Serial.print(i);
     Serial.print(",");
     Serial.print(distance);
     Serial.print(".");
 
-    int servoPos = i;
-    myServo.write(servoPos);          // Move servo to current angle
+    myServo.write(i);                 // Move servo to current angle
 
-    // Object detected within 40 cm
-    if (distance < 40) {
-      while (calculateDistance() < 40) {
-        myServo.write(servoPos);      // Hold servo at same angle
+    // ----------------------------
+    // STOP SERVO ONLY IF < 10 cm
+    // ----------------------------
+    if (distance < 10) {
+
+      // Hold servo in place until object moves away
+      while (calculateDistance() < 10) {
+        myServo.write(i);             // Keep servo fixed
         digitalWrite(ledGreen, LOW);  // Green OFF
-        digitalWrite(ledRed, HIGH);   // Red ON
+        digitalWrite(ledRed, HIGH);   // Red warning LED ON
         digitalWrite(buzzerPin, HIGH);// Buzzer ON
         delay(30);
       }
     }
 
-    // Reset indicator states
+    // Reset indicators when object is not dangerously close
     digitalWrite(ledGreen, HIGH);
-    digitalWrite(buzzerPin, LOW);
     digitalWrite(ledRed, LOW);
+    digitalWrite(buzzerPin, LOW);
 
-    delay(30);
+    delay(30);                        // Sweep speed
   }
 
-  // Sweep back from 165° to 15°
-  for (int i = 165; i > 15; i--) {
+
+  // Sweep backward (right to left)
+  for (int i = 165; i >= 15; i--) {
 
     distance = calculateDistance();
 
+    // Send "angle,distance." to Processing
     Serial.print(i);
     Serial.print(",");
     Serial.print(distance);
     Serial.print(".");
 
-    int servoPos = i;
-    myServo.write(servoPos);
+    myServo.write(i);
 
-    if (distance < 40) {
-      while (calculateDistance() < 40) {
-        myServo.write(servoPos);
+    // ----------------------------
+    // STOP SERVO ONLY IF < 10 cm
+    // ----------------------------
+    if (distance < 10) {
+
+      while (calculateDistance() < 10) {
+        myServo.write(i);
         digitalWrite(ledGreen, LOW);
         digitalWrite(ledRed, HIGH);
         digitalWrite(buzzerPin, HIGH);
@@ -86,30 +105,32 @@ void loop() {
       }
     }
 
+    // Normal mode
     digitalWrite(ledGreen, HIGH);
-    digitalWrite(buzzerPin, LOW);
     digitalWrite(ledRed, LOW);
+    digitalWrite(buzzerPin, LOW);
 
     delay(30);
   }
 }
 
-// ------------------------------------------------------------
-// Ultrasonic distance calculation function
-// ------------------------------------------------------------
+
+
+// ---------------------------------------------------------
+// Ultrasonic Distance Function
+// Triggers sensor → Measures echo time → Returns cm
+// ---------------------------------------------------------
 int calculateDistance() {
 
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
 
-  // Trigger the ultrasonic sensor with 10µs pulse
-  digitalWrite(trigPin, HIGH);
+  digitalWrite(trigPin, HIGH);       // Trigger pulse (10 µs)
   delayMicroseconds(10);
   digitalWrite(trigPin, LOW);
 
-  duration = pulseIn(echoPin, HIGH);   // Read echo time
-
-  distance = duration * 0.034 / 2;     // Convert to cm
+  duration = pulseIn(echoPin, HIGH); // Read echo duration
+  distance = duration * 0.034 / 2;   // Convert to cm
 
   return distance;
 }
