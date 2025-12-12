@@ -22,7 +22,7 @@ If an object gets **closer than 10 cm**, the radar **pauses**, and a **buzzer + 
 
 ---
 
-## 🧩 Hardware Required
+## Hardware Required
 
 | Component                 | Quantity |
 | ------------------------- | -------- |
@@ -74,6 +74,7 @@ If an object gets **closer than 10 cm**, the radar **pauses**, and a **buzzer + 
 The servo gradually rotates between **15° and 165°**.
 At each step, it measures the distance using the ultrasonic sensor.
 
+
 ### 2. Data Format Sent to Processing
 
 For each angle, Arduino sends:
@@ -90,6 +91,7 @@ Distance = 22 cm
 
 Processing reads this and updates the radar.
 
+
 ### 3. Processing Radar UI
 
 Processing animates:
@@ -99,6 +101,7 @@ Processing animates:
 * Object markers in red
 * Text labels (angle + distance)
 * Status (In Range / Out of Range)
+
 
 ### 4. Object Detection Alert
 
