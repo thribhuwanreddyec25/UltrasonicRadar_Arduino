@@ -140,7 +140,7 @@ Open  [Radar_UI.pde](https://github.com/thribhuwanreddyec25/UltrasonicRadar_Ardu
 
 Update the COM port:
 
-myPort = new Serial(this, "COM3", 9600);
+`myPort = new Serial(this, "COM3", 9600);`
 
 (Use whatever COM your Arduino shows.)
 
